@@ -1,5 +1,9 @@
 package mx.edu.isc.tesoem.hjcg.p4_7s21;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,14 +11,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import DatosParce.DatosParce;
 
 public class PrincipalActivity extends AppCompatActivity{
 
-    Button btnab,btnap;
+    Button btnab,btnap,btnar;
 
     EditText txtnombre,txtcorreo,txtedad;
+
+    ActivityResultLauncher<Intent> activityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == RESULT_OK){
+                Toast.makeText(PrincipalActivity.this, "Regreso con exito", Toast.LENGTH_SHORT).show();
+            }else if(result.getResultCode() == RESULT_CANCELED){
+                Toast.makeText(PrincipalActivity.this, "Se cancelo por el usuario", Toast.LENGTH_SHORT).show();
+            }
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +45,7 @@ public class PrincipalActivity extends AppCompatActivity{
         //aqui enlazamos los botones
         btnab = findViewById(R.id.p1btnab);
         btnap = findViewById(R.id.p1btnap);
+        btnar = findViewById(R.id.p1btnar);
 
         //aqui activamos la escucha del click
         btnab.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +64,14 @@ public class PrincipalActivity extends AppCompatActivity{
                 Intent lanza = new Intent(PrincipalActivity.this, ParceActivity.class);
                 lanza.putExtra("datosparcelables",datosParce);
                 startActivity(lanza);
+            }
+        });
+
+        btnar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent lanza = new Intent(PrincipalActivity.this, RegresaActivity.class);
+                activityResult.launch(lanza);
             }
         });
     }

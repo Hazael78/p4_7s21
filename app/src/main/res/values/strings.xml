@@ -13,5 +13,7 @@
     <string name="p3titulo">Elementos parcelables datos</string>
     <string name="p3informacion">Datos obtenidos</string>
     <string name="p3btnregresa">Regresar al Home</string>
-
+    <string name="p4titulo">Regresa estado de cierre de la actividad</string>
+    <string name="p4btnok">Cerrar con exito</string>
+    <string name="p4btncancelar">Cerrado con error</string>
 </resources>
